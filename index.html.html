@@ -1,0 +1,1338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HostelResolve | SCSVMV</title>
+
+<style>
+:root {
+  --orange: #f47721;
+  --dark: #d95c0b;
+  --light: #fff3e9;
+  --ink: #292b3c;
+  --muted: #727586;
+  --border: #e7e7ee;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fffaf6;
+  color: var(--ink);
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+header {
+  padding: 15px 5%;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.logo {
+  background: var(--orange);
+  color: white;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.brand h2 { margin: 0; font-size: 21px; }
+.brand p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+
+.container { max-width: 1050px; width: 92%; margin: 30px auto; }
+.hidden { display: none !important; }
+
+.login {
+  max-width: 460px;
+  margin: 40px auto;
+  background: white;
+  border: 1px solid var(--border);
+  padding: 27px;
+  border-radius: 17px;
+}
+
+.center { text-align: center; }
+.center h1 { margin-bottom: 8px; }
+
+.muted { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 22px 0;
+}
+
+.tab {
+  padding: 12px 5px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 8px;
+}
+
+.tab.active {
+  background: var(--light);
+  border-color: var(--orange);
+  color: var(--dark);
+  font-weight: bold;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dddde6;
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+}
+
+textarea { min-height: 110px; resize: vertical; }
+
+.field { margin-bottom: 17px; }
+
+.btn {
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.primary { background: var(--orange); color: white; }
+.primary:hover { background: var(--dark); }
+.secondary { background: #f0f0f5; color: var(--ink); }
+.full { width: 100%; }
+.language { width: auto; min-width: 115px; }
+
+.note {
+  background: var(--light);
+  color: #854313;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 18px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.heading h1 { font-size: 27px; margin: 0 0 7px; }
+.heading p { margin: 0; color: var(--muted); font-size: 13px; }
+
+.panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.panel h2 { font-size: 20px; margin: 0 0 8px; }
+.sub { font-size: 13px; color: var(--muted); margin: 0 0 20px; line-height: 1.6; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 17px;
+}
+
+.wide { grid-column: 1 / -1; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 22px;
+}
+
+.stat {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 18px;
+  border-radius: 12px;
+}
+
+.stat p { font-size: 12px; color: var(--muted); margin: 0 0 9px; }
+.stat h2 { margin: 0; font-size: 27px; }
+
+.card {
+  border: 1px solid var(--border);
+  padding: 17px;
+  border-radius: 11px;
+  margin-bottom: 13px;
+  background: white;
+}
+
+.cardtop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.card h3 { font-size: 16px; margin: 0 0 7px; overflow-wrap: anywhere; }
+
+.status {
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 25px;
+  background: #fff0df;
+  color: #9a510c;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.assigned { background: #eaf1ff; color: #2455b3; }
+.progress { background: #f1eaff; color: #7341b5; }
+.resolved { background: #e4f8ed; color: #147347; }
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  background: #fafafd;
+  padding: 13px;
+  border-radius: 8px;
+  margin-top: 13px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.detail-label {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.desc {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 14px;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.controls .field { margin: 0; }
+
+.empty {
+  padding: 25px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed #d7d7e2;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+
+.message {
+  padding: 13px;
+  border-radius: 8px;
+  background: #e7f8ed;
+  color: #176b42;
+  margin-bottom: 17px;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.error-message { background: #fff0f0; color: #a32222; }
+.translation-result { margin-top: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid var(--border);
+}
+
+@media(max-width:650px) {
+  .grid, .stats, .details, .controls { grid-template-columns: 1fr; }
+  .wide { grid-column: auto; }
+  .panel, .login { padding: 18px; }
+  .heading h1 { font-size: 23px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">H</div>
+    <div>
+      <h2>HostelResolve</h2>
+      <p data-i18n="subtitle">SCSVMV University · Hostel Complaint Portal</p>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    <label for="languageSelect" style="margin:0" data-i18n="language">Language</label>
+    <select id="languageSelect" class="language">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+      <option value="ta">தமிழ்</option>
+    </select>
+    <span id="userLabel" class="muted"></span>
+    <button id="logoutBtn" class="btn secondary hidden"
+      onclick="logout()" data-i18n="logout">Logout</button>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- LOGIN -->
+<section id="loginPage">
+  <div class="login">
+    <div class="center">
+      <h1 data-i18n="welcome">Welcome Back</h1>
+      <p class="muted" data-i18n="loginHint">Login to your HostelResolve account</p>
+    </div>
+
+    <div class="tabs">
+      <button type="button" id="studentTab" class="tab active"
+        onclick="selectRole('Student')" data-i18n="student">Student</button>
+      <button type="button" id="adminTab" class="tab"
+        onclick="selectRole('Admin')" data-i18n="admin">Admin</button>
+      <button type="button" id="workerTab" class="tab"
+        onclick="selectRole('Worker')" data-i18n="worker">Worker</button>
+    </div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label id="idLabel" for="loginId">Student ID</label>
+        <input id="loginId" required placeholder="Enter your ID">
+      </div>
+      <div class="field">
+        <label for="password" data-i18n="password">Password</label>
+        <input id="password" type="password" required placeholder="Enter your password">
+      </div>
+      <button type="submit" class="btn primary full" data-i18n="login">Login</button>
+    </form>
+
+    <div class="note">
+      <b data-i18n="demoLogin">Demo login:</b>
+      <span data-i18n="demoHint">Enter any ID and password.</span><br>
+      <span data-i18n="workerIds">Worker IDs: WORKER01, WORKER02, WORKER03.</span><br>
+      <span data-i18n="demoWarning">Demo login is not real authentication.</span>
+    </div>
+  </div>
+</section>
+
+<!-- STUDENT DASHBOARD -->
+<section id="studentPage" class="hidden">
+  <div class="heading">
+    <div>
+      <h1 data-i18n="studentDashboard">Student Dashboard</h1>
+      <p data-i18n="studentIntro">Register a complaint and track its progress.</p>
+    </div>
+  </div>
+
+  <div id="studentMessage" class="hidden message" role="status"></div>
+
+  <div class="stats">
+    <div class="stat"><p data-i18n="myComplaints">My Complaints</p><h2 id="sTotal">0</h2></div>
+    <div class="stat"><p data-i18n="activeComplaints">Active Complaints</p><h2 id="sActive">0</h2></div>
+    <div class="stat"><p data-i18n="resolved">Resolved</p><h2 id="sResolved">0</h2></div>
+  </div>
+
+  <div class="panel">
+    <h2 data-i18n="registerComplaint">Register a Complaint</h2>
+    <p class="sub" data-i18n="registerHint">Enter your hostel and floor details.</p>
+
+    <form id="complaintForm">
+      <div class="grid">
+        <div class="field">
+          <label for="hostelType" data-i18n="hostelType">Hostel Type *</label>
+          <select id="hostelType" required>
+            <option value="" data-i18n="selectType">Select type</option>
+            <option value="Boys" data-i18n="boys">Boys</option>
+            <option value="Girls" data-i18n="girls">Girls</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="hostel" data-i18n="hostelName">Hostel Name *</label>
+          <select id="hostel" required disabled>
+            <option value="" data-i18n="selectTypeFirst">Select hostel type first</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="floor" data-i18n="floor">Your Floor Number / Name *</label>
+          <input id="floor" required placeholder="e.g. Ground Floor, 2nd Floor, 5">
+        </div>
+
+        <div class="field">
+          <label for="room" data-i18n="room">Room Number *</label>
+          <input id="room" required placeholder="Enter room number">
+        </div>
+
+        <div class="field wide">
+          <label for="category" data-i18n="category">Complaint Category *</label>
+          <select id="category" required>
+            <option value="" data-i18n="selectCategory">Select category</option>
+            <option value="Electrical" data-i18n="catElectrical">Electrical</option>
+            <option value="Plumbing / Water" data-i18n="catPlumbing">Plumbing / Water</option>
+            <option value="Cleaning" data-i18n="catCleaning">Cleaning</option>
+            <option value="Furniture" data-i18n="catFurniture">Furniture</option>
+            <option value="Wi-Fi / Internet" data-i18n="catWifi">Wi-Fi / Internet</option>
+            <option value="Food / Mess" data-i18n="catFood">Food / Mess</option>
+            <option value="Security" data-i18n="catSecurity">Security</option>
+            <option value="Other" data-i18n="catOther">Other</option>
+          </select>
+        </div>
+
+        <div class="field wide">
+          <label for="description" data-i18n="description">Complaint Details *</label>
+          <textarea id="description" required minlength="5"
+            placeholder="Explain your problem..."></textarea>
+
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px">
+            <button type="button" id="translateBtn" class="btn secondary"
+              onclick="translateDescription()" data-i18n="translateDescription">
+              Translate description
+            </button>
+            <span class="muted" data-i18n="translationHint">
+              Online translation requires internet.
+            </span>
+          </div>
+          <div id="translationResult" class="translation-result muted"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn primary" data-i18n="submitComplaint">Submit Complaint</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h2 data-i18n="trackComplaint">Track My Complaint</h2>
+    <p class="sub" data-i18n="trackHint">Search by complaint ID to see its latest status and assigned worker.</p>
+    <div class="field">
+      <label for="trackId" data-i18n="complaintId">Complaint ID</label>
+      <input id="trackId" placeholder="e.g. HR-123456789">
+    </div>
+    <button type="button" class="btn primary" onclick="trackComplaint()" data-i18n="trackButton">Track Complaint</button>
+    <button type="button" class="btn secondary" onclick="clearTracking()" data-i18n="clearTracking">Clear Tracking</button>
+    <div id="trackingResult" style="margin-top:18px"></div>
+  </div>
+
+  <div class="panel">
+    <h2 data-i18n="history">My Complaint History</h2>
+    <p class="sub" data-i18n="historyHint">All complaints registered with your student ID.</p>
+    <div id="studentComplaints"></div>
+  </div>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="adminPage" class="hidden">
+  <div class="heading">
+    <div>
+      <h1 data-i18n="adminDashboard">Admin Dashboard</h1>
+      <p data-i18n="adminIntro">Assign complaints to workers and manage progress.</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><p data-i18n="totalComplaints">Total Complaints</p><h2 id="aTotal">0</h2></div>
+    <div class="stat"><p data-i18n="pendingActive">Pending / Active</p><h2 id="aActive">0</h2></div>
+    <div class="stat"><p data-i18n="resolved">Resolved</p><h2 id="aResolved">0</h2></div>
+  </div>
+
+  <div class="panel">
+    <h2 data-i18n="allComplaints">All Complaints</h2>
+    <p class="sub" data-i18n="assignHint">Choose a worker to add the complaint to their assigned-work list.</p>
+    <div id="adminComplaints"></div>
+  </div>
+</section>
+
+<!-- WORKER DASHBOARD -->
+<section id="workerPage" class="hidden">
+  <div class="heading">
+    <div>
+      <h1 data-i18n="workerProfile">Worker Profile</h1>
+      <p data-i18n="workerIntro">Complaints assigned to your worker ID will appear here.</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><p data-i18n="myAssignedWork">My Assigned Work</p><h2 id="wTotal">0</h2></div>
+    <div class="stat"><p data-i18n="inProgress">In Progress</p><h2 id="wProgress">0</h2></div>
+    <div class="stat"><p data-i18n="resolved">Resolved</p><h2 id="wResolved">0</h2></div>
+  </div>
+
+  <div class="panel">
+    <h2 data-i18n="assignedComplaints">My Assigned Complaints</h2>
+    <p class="sub" data-i18n="assignedHint">These are the complaints assigned to your logged-in worker ID.</p>
+    <div id="workerComplaints"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>HostelResolve · SCSVMV University</footer>
+
+<script>
+"use strict";
+
+/* Keep the existing storage key to preserve saved complaints. */
+const KEY = "hostelResolveComplaints_v1";
+
+const HOSTELS = {
+  Boys: [
+    "Annapoorani Boys' Hostel",
+    "Visalakshi Boys' Hostel",
+    "Gadikasthanam Boys' Hostel"
+  ],
+  Girls: [
+    "Sri Saraswathi Girls' Hostel",
+    "Sri Kamakshi Girls' Hostel",
+    "Sri Meenakshi Girls' Hostel"
+  ]
+};
+
+const WORKERS = ["WORKER01", "WORKER02", "WORKER03"];
+const STATUSES = ["Submitted", "Assigned", "In Progress", "Resolved"];
+
+let role = "Student";
+let user = null;
+let language = "en";
+let lastTranslation = "";
+
+/* UI translations */
+const T = {
+en: {
+subtitle:"SCSVMV University · Hostel Complaint Portal",
+language:"Language",logout:"Logout",welcome:"Welcome Back",
+loginHint:"Login to your HostelResolve account",
+student:"Student",admin:"Admin",worker:"Worker",password:"Password",
+login:"Login",demoLogin:"Demo login:",demoHint:"Enter any ID and password.",
+workerIds:"Worker IDs: WORKER01, WORKER02, WORKER03.",
+demoWarning:"Demo login is not real authentication.",
+studentDashboard:"Student Dashboard",
+studentIntro:"Register a complaint and track its progress.",
+myComplaints:"My Complaints",activeComplaints:"Active Complaints",
+resolved:"Resolved",registerComplaint:"Register a Complaint",
+registerHint:"Enter your hostel and floor details.",
+hostelType:"Hostel Type *",selectType:"Select type",boys:"Boys",girls:"Girls",
+hostelName:"Hostel Name *",selectTypeFirst:"Select hostel type first",
+floor:"Your Floor Number / Name *",room:"Room Number *",
+category:"Complaint Category *",selectCategory:"Select category",
+catElectrical:"Electrical",catPlumbing:"Plumbing / Water",
+catCleaning:"Cleaning",catFurniture:"Furniture",catWifi:"Wi-Fi / Internet",
+catFood:"Food / Mess",catSecurity:"Security",catOther:"Other",
+description:"Complaint Details *",translateDescription:"Translate description",
+translationHint:"Online translation to Telugu or Tamil requires internet.",
+submitComplaint:"Submit Complaint",trackComplaint:"Track My Complaint",
+trackHint:"Search by complaint ID to see its latest status and assigned worker.",
+complaintId:"Complaint ID",trackButton:"Track Complaint",
+clearTracking:"Clear Tracking",history:"My Complaint History",
+historyHint:"All complaints registered with your student ID.",
+adminDashboard:"Admin Dashboard",
+adminIntro:"Assign complaints to workers and manage progress.",
+totalComplaints:"Total Complaints",pendingActive:"Pending / Active",
+allComplaints:"All Complaints",
+assignHint:"Choose a worker to add the complaint to their assigned-work list.",
+workerProfile:"Worker Profile",
+workerIntro:"Complaints assigned to your worker ID will appear here.",
+myAssignedWork:"My Assigned Work",inProgress:"In Progress",
+assignedComplaints:"My Assigned Complaints",
+assignedHint:"These are the complaints assigned to your logged-in worker ID.",
+studentId:"Student ID",adminId:"Admin ID",workerId:"Worker ID",
+enterStudent:"Enter your student ID",enterAdmin:"Enter your admin ID",
+enterWorker:"e.g. WORKER01",enterPassword:"Enter your password",
+groundFloor:"e.g. Ground Floor, 2nd Floor, 5",enterRoom:"Enter room number",
+explainProblem:"Explain your problem...",submitted:"Submitted",
+assigned:"Assigned",statusProgress:"In Progress",statusResolved:"Resolved",
+assignWorker:"Assign Worker",chooseWorker:"Select worker",
+complaintStatus:"Complaint Status",updateStatus:"Update Work Status",
+notAssigned:"Not assigned",hostel:"Hostel",studentFloor:"Student's Floor",
+roomNumber:"Room Number",noComplaints:"No complaints registered yet.",
+noAdminComplaints:"No complaints have been registered.",
+noWorkerWork:"No work assigned to",askAdmin:"Ask the Admin to assign work to this worker ID.",
+enterTrack:"Enter your complaint ID to track its status.",
+notFound:"Complaint not found for your student ID. Check the ID and try again.",
+loginRequired:"Please enter your ID and password.",
+fillRequired:"Please complete all required fields. Complaint details need at least 5 characters.",
+submittedSuccess:"Complaint submitted successfully! Your Complaint ID is: ",
+saveFailed:"Could not save the complaint. Check your browser storage settings.",
+translateEmpty:"Enter complaint details first.",translating:"Translating…",
+translated:"Translated description:",translationFailed:"Translation failed. Check your internet connection and try again.",
+englishSelected:"English is selected. Choose Telugu or Tamil to translate.",
+studentCannotStatus:"Students cannot change complaint status.",
+workerCannotSubmitted:"Workers cannot change a complaint back to Submitted.",
+validWorker:"Please select a valid worker.",notFoundAdmin:"Complaint not found. Please refresh.",
+onlyAssigned:"You can only update complaints assigned to your worker ID.",
+created:"Created",status:"Status"
+},
+
+te: {
+subtitle:"SCSVMV విశ్వవిద్యాలయం · హాస్టల్ ఫిర్యాదుల పోర్టల్",
+language:"భాష",logout:"లాగ్ అవుట్",welcome:"స్వాగతం",
+loginHint:"మీ HostelResolve ఖాతాలోకి లాగిన్ అవ్వండి",
+student:"విద్యార్థి",admin:"అడ్మిన్",worker:"సిబ్బంది",
+password:"పాస్‌వర్డ్",login:"లాగిన్",demoLogin:"డెమో లాగిన్:",
+demoHint:"ఏదైనా ID మరియు పాస్‌వర్డ్ నమోదు చేయండి.",
+workerIds:"సిబ్బంది IDలు: WORKER01, WORKER02, WORKER03.",
+demoWarning:"ఇది నిజమైన ధృవీకరణ కాదు.",
+studentDashboard:"విద్యార్థి డాష్‌బోర్డ్",
+studentIntro:"ఫిర్యాదు నమోదు చేసి దాని స్థితిని తెలుసుకోండి.",
+myComplaints:"నా ఫిర్యాదులు",activeComplaints:"పెండింగ్ ఫిర్యాదులు",
+resolved:"పరిష్కరించబడినవి",registerComplaint:"ఫిర్యాదు నమోదు",
+registerHint:"మీ హాస్టల్ మరియు అంతస్తు వివరాలను నమోదు చేయండి.",
+hostelType:"హాస్టల్ రకం *",selectType:"రకాన్ని ఎంచుకోండి",
+boys:"బాలుర",girls:"బాలికల",hostelName:"హాస్టల్ పేరు *",
+selectTypeFirst:"ముందుగా హాస్టల్ రకాన్ని ఎంచుకోండి",
+floor:"అంతస్తు సంఖ్య / పేరు *",room:"గది సంఖ్య *",
+category:"ఫిర్యాదు వర్గం *",selectCategory:"వర్గాన్ని ఎంచుకోండి",
+catElectrical:"విద్యుత్",catPlumbing:"నీరు / ప్లంబింగ్",
+catCleaning:"శుభ్రత",catFurniture:"ఫర్నిచర్",
+catWifi:"వై-ఫై / ఇంటర్నెట్",catFood:"ఆహారం / మెస్",
+catSecurity:"భద్రత",catOther:"ఇతర",
+description:"ఫిర్యాదు వివరాలు *",translateDescription:"వివరాలను అనువదించండి",
+translationHint:"తెలుగు లేదా తమిళానికి ఆన్‌లైన్ అనువాదానికి ఇంటర్నెట్ అవసరం.",
+submitComplaint:"ఫిర్యాదు సమర్పించండి",trackComplaint:"నా ఫిర్యాదును ట్రాక్ చేయండి",
+trackHint:"స్థితి మరియు సిబ్బందిని చూడటానికి ఫిర్యాదు IDతో వెతకండి.",
+complaintId:"ఫిర్యాదు ID",trackButton:"ట్రాక్ చేయండి",
+clearTracking:"ట్రాకింగ్ క్లియర్ చేయండి",history:"నా ఫిర్యాదుల చరిత్ర",
+historyHint:"మీ విద్యార్థి IDతో నమోదు చేసిన ఫిర్యాదులు.",
+adminDashboard:"అడ్మిన్ డాష్‌బోర్డ్",
+adminIntro:"ఫిర్యాదులను సిబ్బందికి కేటాయించి పురోగతిని నిర్వహించండి.",
+totalComplaints:"మొత్తం ఫిర్యాదులు",pendingActive:"పెండింగ్ / కొనసాగుతున్నవి",
+allComplaints:"అన్ని ఫిర్యాదులు",assignHint:"ఫిర్యాదును సిబ్బందికి కేటాయించండి.",
+workerProfile:"సిబ్బంది ప్రొఫైల్",
+workerIntro:"మీ IDకి కేటాయించిన ఫిర్యాదులు ఇక్కడ కనిపిస్తాయి.",
+myAssignedWork:"నాకు కేటాయించిన పనులు",inProgress:"పనిలో ఉన్నాయి",
+assignedComplaints:"నాకు కేటాయించిన ఫిర్యాదులు",
+assignedHint:"మీ సిబ్బంది IDకి కేటాయించిన ఫిర్యాదులు.",
+studentId:"విద్యార్థి ID",adminId:"అడ్మిన్ ID",workerId:"సిబ్బంది ID",
+enterStudent:"విద్యార్థి ID నమోదు చేయండి",enterAdmin:"అడ్మిన్ ID నమోదు చేయండి",
+enterWorker:"ఉదా. WORKER01",enterPassword:"పాస్‌వర్డ్ నమోదు చేయండి",
+groundFloor:"ఉదా. గ్రౌండ్ ఫ్లోర్, 2వ అంతస్తు",enterRoom:"గది సంఖ్య నమోదు చేయండి",
+explainProblem:"మీ సమస్యను వివరించండి...",submitted:"సమర్పించబడింది",
+assigned:"కేటాయించబడింది",statusProgress:"పనిలో ఉంది",
+statusResolved:"పరిష్కరించబడింది",assignWorker:"సిబ్బందిని కేటాయించండి",
+chooseWorker:"సిబ్బందిని ఎంచుకోండి",complaintStatus:"ఫిర్యాదు స్థితి",
+updateStatus:"పని స్థితిని మార్చండి",notAssigned:"కేటాయించలేదు",
+hostel:"హాస్టల్",studentFloor:"విద్యార్థి అంతస్తు",roomNumber:"గది సంఖ్య",
+noComplaints:"ఇంకా ఫిర్యాదులు నమోదు కాలేదు.",
+noAdminComplaints:"ఫిర్యాదులు నమోదు కాలేదు.",
+noWorkerWork:"ఈ IDకి పని కేటాయించలేదు:",askAdmin:"అడ్మిన్‌ను సంప్రదించండి.",
+enterTrack:"స్థితిని తెలుసుకోవడానికి ఫిర్యాదు ID నమోదు చేయండి.",
+notFound:"మీ విద్యార్థి IDకి ఫిర్యాదు కనిపించలేదు. IDని తనిఖీ చేయండి.",
+loginRequired:"మీ ID మరియు పాస్‌వర్డ్ నమోదు చేయండి.",
+fillRequired:"అన్ని వివరాలను నమోదు చేయండి. ఫిర్యాదు కనీసం 5 అక్షరాలు ఉండాలి.",
+submittedSuccess:"ఫిర్యాదు విజయవంతంగా సమర్పించబడింది! మీ ఫిర్యాదు ID: ",
+saveFailed:"ఫిర్యాదును సేవ్ చేయలేకపోయాం. బ్రౌజర్ నిల్వ సెట్టింగ్‌లను తనిఖీ చేయండి.",
+translateEmpty:"ముందుగా ఫిర్యాదు వివరాలు నమోదు చేయండి.",
+translating:"అనువదిస్తోంది…",translated:"అనువదించిన వివరణ:",
+translationFailed:"అనువాదం విఫలమైంది. ఇంటర్నెట్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
+englishSelected:"అనువదించడానికి తెలుగు లేదా తమిళాన్ని ఎంచుకోండి.",
+studentCannotStatus:"విద్యార్థులు ఫిర్యాదు స్థితిని మార్చలేరు.",
+workerCannotSubmitted:"సిబ్బంది స్థితిని మళ్లీ సమర్పించబడింది అని మార్చలేరు.",
+validWorker:"సరైన సిబ్బందిని ఎంచుకోండి.",
+notFoundAdmin:"ఫిర్యాదు కనుగొనబడలేదు. పేజీని రిఫ్రెష్ చేయండి.",
+onlyAssigned:"మీ IDకి కేటాయించిన ఫిర్యాదులనే మార్చగలరు.",
+created:"నమోదు సమయం",status:"స్థితి"
+},
+
+ta: {
+subtitle:"SCSVMV பல்கலைக்கழகம் · விடுதி புகார் தளம்",
+language:"மொழி",logout:"வெளியேறு",welcome:"மீண்டும் வருக",
+loginHint:"உங்கள் HostelResolve கணக்கில் உள்நுழையவும்",
+student:"மாணவர்",admin:"நிர்வாகி",worker:"பணியாளர்",
+password:"கடவுச்சொல்",login:"உள்நுழை",demoLogin:"டெமோ உள்நுழைவு:",
+demoHint:"ஏதேனும் ID மற்றும் கடவுச்சொல்லை உள்ளிடவும்.",
+workerIds:"பணியாளர் IDகள்: WORKER01, WORKER02, WORKER03.",
+demoWarning:"இது உண்மையான அங்கீகாரம் அல்ல.",
+studentDashboard:"மாணவர் டாஷ்போர்டு",
+studentIntro:"புகாரைப் பதிவு செய்து அதன் நிலையைப் பார்க்கவும்.",
+myComplaints:"எனது புகார்கள்",activeComplaints:"நிலுவைப் புகார்கள்",
+resolved:"தீர்க்கப்பட்டவை",registerComplaint:"புகார் பதிவு",
+registerHint:"விடுதி மற்றும் தள விவரங்களை உள்ளிடவும்.",
+hostelType:"விடுதி வகை *",selectType:"வகையைத் தேர்ந்தெடுக்கவும்",
+boys:"ஆண்கள்",girls:"பெண்கள்",hostelName:"விடுதி பெயர் *",
+selectTypeFirst:"முதலில் விடுதி வகையைத் தேர்ந்தெடுக்கவும்",
+floor:"தள எண் / பெயர் *",room:"அறை எண் *",
+category:"புகார் வகை *",selectCategory:"வகையைத் தேர்ந்தெடுக்கவும்",
+catElectrical:"மின்சாரம்",catPlumbing:"குழாய் / தண்ணீர்",
+catCleaning:"சுத்தம்",catFurniture:"தளபாடங்கள்",
+catWifi:"வை-ஃபை / இணையம்",catFood:"உணவு / மெஸ்",
+catSecurity:"பாதுகாப்பு",catOther:"மற்றவை",
+description:"புகார் விவரங்கள் *",translateDescription:"விவரங்களை மொழிபெயர்க்கவும்",
+translationHint:"தமிழ் அல்லது தெலுங்கு மொழிபெயர்ப்பிற்கு இணையம் தேவை.",
+submitComplaint:"புகாரைச் சமர்ப்பிக்கவும்",trackComplaint:"எனது புகாரைக் கண்காணிக்கவும்",
+trackHint:"நிலை மற்றும் பணியாளரைப் பார்க்க புகார் ID மூலம் தேடவும்.",
+complaintId:"புகார் ID",trackButton:"கண்காணிக்கவும்",
+clearTracking:"கண்காணிப்பை அழிக்கவும்",history:"எனது புகார் வரலாறு",
+historyHint:"உங்கள் மாணவர் ID மூலம் பதிவு செய்யப்பட்ட புகார்கள்.",
+adminDashboard:"நிர்வாகி டாஷ்போர்டு",
+adminIntro:"புகார்களைப் பணியாளர்களுக்கு ஒதுக்கி முன்னேற்றத்தை நிர்வகிக்கவும்.",
+totalComplaints:"மொத்த புகார்கள்",pendingActive:"நிலுவை / செயலில்",
+allComplaints:"அனைத்து புகார்கள்",assignHint:"புகாரை ஒரு பணியாளருக்கு ஒதுக்கவும்.",
+workerProfile:"பணியாளர் சுயவிவரம்",
+workerIntro:"உங்கள் பணியாளர் IDக்கு ஒதுக்கப்பட்ட புகார்கள் இங்கே தோன்றும்.",
+myAssignedWork:"எனக்கு ஒதுக்கப்பட்ட வேலை",inProgress:"செயலில் உள்ளது",
+assignedComplaints:"எனக்கு ஒதுக்கப்பட்ட புகார்கள்",
+assignedHint:"உங்கள் IDக்கு ஒதுக்கப்பட்ட புகார்கள்.",
+studentId:"மாணவர் ID",adminId:"நிர்வாகி ID",workerId:"பணியாளர் ID",
+enterStudent:"மாணவர் IDஐ உள்ளிடவும்",enterAdmin:"நிர்வாகி IDஐ உள்ளிடவும்",
+enterWorker:"எ.கா. WORKER01",enterPassword:"கடவுச்சொல்லை உள்ளிடவும்",
+groundFloor:"எ.கா. தரைத்தளம், 2வது தளம்",enterRoom:"அறை எண்ணை உள்ளிடவும்",
+explainProblem:"உங்கள் பிரச்சினையை விளக்கவும்...",submitted:"சமர்ப்பிக்கப்பட்டது",
+assigned:"ஒதுக்கப்பட்டது",statusProgress:"செயலில் உள்ளது",
+statusResolved:"தீர்க்கப்பட்டது",assignWorker:"பணியாளரை ஒதுக்கவும்",
+chooseWorker:"பணியாளரைத் தேர்ந்தெடுக்கவும்",complaintStatus:"புகார் நிலை",
+updateStatus:"வேலை நிலையைப் புதுப்பிக்கவும்",notAssigned:"ஒதுக்கப்படவில்லை",
+hostel:"விடுதி",studentFloor:"மாணவர் தளம்",roomNumber:"அறை எண்",
+noComplaints:"இதுவரை புகார்கள் பதிவு செய்யப்படவில்லை.",
+noAdminComplaints:"புகார்கள் எதுவும் பதிவு செய்யப்படவில்லை.",
+noWorkerWork:"இந்த IDக்கு வேலை ஒதுக்கப்படவில்லை:",askAdmin:"நிர்வாகியிடம் கேட்கவும்.",
+enterTrack:"நிலையை அறிய புகார் IDஐ உள்ளிடவும்.",
+notFound:"உங்கள் மாணவர் IDக்கு இந்த புகார் கிடைக்கவில்லை. IDஐ சரிபார்க்கவும்.",
+loginRequired:"உங்கள் ID மற்றும் கடவுச்சொல்லை உள்ளிடவும்.",
+fillRequired:"தேவையான அனைத்து விவரங்களையும் நிரப்பவும். குறைந்தது 5 எழுத்துகள் தேவை.",
+submittedSuccess:"புகார் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது! உங்கள் புகார் ID: ",
+saveFailed:"புகாரைச் சேமிக்க முடியவில்லை. உலாவி சேமிப்பு அமைப்புகளைச் சரிபார்க்கவும்.",
+translateEmpty:"முதலில் புகார் விவரங்களை உள்ளிடவும்.",
+translating:"மொழிபெயர்க்கிறது…",translated:"மொழிபெயர்க்கப்பட்ட விவரம்:",
+translationFailed:"மொழிபெயர்ப்பு தோல்வியடைந்தது. இணையத்தைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+englishSelected:"மொழிபெயர்க்க தமிழ் அல்லது தெலுங்கைத் தேர்ந்தெடுக்கவும்.",
+studentCannotStatus:"மாணவர்கள் புகார் நிலையை மாற்ற முடியாது.",
+workerCannotSubmitted:"பணியாளர்கள் மீண்டும் சமர்ப்பிக்கப்பட்டது என மாற்ற முடியாது.",
+validWorker:"சரியான பணியாளரைத் தேர்ந்தெடுக்கவும்.",
+notFoundAdmin:"புகார் கிடைக்கவில்லை. பக்கத்தைப் புதுப்பிக்கவும்.",
+onlyAssigned:"உங்களுக்கு ஒதுக்கப்பட்ட புகார்களை மட்டுமே மாற்ற முடியும்.",
+created:"பதிவு நேரம்",status:"நிலை"
+}
+};
+
+function tr(key) {
+  return (T[language] && T[language][key]) || T.en[key] || key;
+}
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[ch]);
+}
+
+function normalizeWorkerId(value) {
+  return String(value || "").trim().toUpperCase();
+}
+
+function getData() {
+  try {
+    const data = JSON.parse(localStorage.getItem(KEY) || "[]");
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+function saveData(data) {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(data));
+    const saved = JSON.parse(localStorage.getItem(KEY) || "[]");
+    return Array.isArray(saved) && saved.length === data.length;
+  } catch (error) {
+    console.error(error);
+    alert(tr("saveFailed"));
+    return false;
+  }
+}
+
+function translateStatus(status) {
+  return ({
+    "Submitted":tr("submitted"),
+    "Assigned":tr("assigned"),
+    "In Progress":tr("statusProgress"),
+    "Resolved":tr("statusResolved")
+  })[status] || status;
+}
+
+function translateCategory(category) {
+  const keys = {
+    "Electrical":"catElectrical",
+    "Plumbing / Water":"catPlumbing",
+    "Cleaning":"catCleaning",
+    "Furniture":"catFurniture",
+    "Wi-Fi / Internet":"catWifi",
+    "Food / Mess":"catFood",
+    "Security":"catSecurity",
+    "Other":"catOther"
+  };
+  return keys[category] ? tr(keys[category]) : category;
+}
+
+function applyLanguage() {
+  document.documentElement.lang = language;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    el.textContent = tr(el.dataset.i18n);
+  });
+
+  const idKey = {
+    Student:"studentId",
+    Admin:"adminId",
+    Worker:"workerId"
+  };
+
+  document.getElementById("idLabel").textContent = tr(idKey[role]);
+  document.getElementById("loginId").placeholder =
+    tr(role === "Worker" ? "enterWorker" :
+       role === "Admin" ? "enterAdmin" : "enterStudent");
+
+  document.getElementById("password").placeholder = tr("enterPassword");
+  document.getElementById("floor").placeholder = tr("groundFloor");
+  document.getElementById("room").placeholder = tr("enterRoom");
+  document.getElementById("description").placeholder = tr("explainProblem");
+
+  const hostelType = document.getElementById("hostelType");
+  Array.from(hostelType.options).forEach(option => {
+    if (!option.value) option.textContent = tr("selectType");
+    if (option.value === "Boys") option.textContent = tr("boys");
+    if (option.value === "Girls") option.textContent = tr("girls");
+  });
+
+  const category = document.getElementById("category");
+  Array.from(category.options).forEach(option => {
+    if (!option.value) option.textContent = tr("selectCategory");
+    else option.textContent = translateCategory(option.value);
+  });
+
+  updateHostelOptions();
+  refresh();
+}
+
+function selectRole(selectedRole) {
+  role = selectedRole;
+
+  ["Student", "Admin", "Worker"].forEach(item => {
+    document.getElementById(item.toLowerCase() + "Tab")
+      .classList.toggle("active", item === selectedRole);
+  });
+
+  applyLanguage();
+}
+
+document.getElementById("languageSelect").addEventListener("change", event => {
+  language = event.target.value;
+  applyLanguage();
+});
+
+document.getElementById("loginForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  let id = document.getElementById("loginId").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if (!id || !password) {
+    alert(tr("loginRequired"));
+    return;
+  }
+
+  if (role === "Worker") id = normalizeWorkerId(id);
+
+  /* Demo login only. A backend is needed for secure authentication. */
+  user = { role, id };
+  openDashboard();
+});
+
+function openDashboard() {
+  document.getElementById("loginPage").classList.add("hidden");
+
+  ["studentPage", "adminPage", "workerPage"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+
+  document.getElementById(user.role.toLowerCase() + "Page")
+    .classList.remove("hidden");
+
+  document.getElementById("logoutBtn").classList.remove("hidden");
+  document.getElementById("userLabel").textContent =
+    tr(user.role.toLowerCase()) + ": " + user.id;
+
+  refresh();
+}
+
+function logout() {
+  user = null;
+  document.getElementById("loginForm").reset();
+  document.getElementById("complaintForm").reset();
+  document.getElementById("loginPage").classList.remove("hidden");
+
+  ["studentPage", "adminPage", "workerPage"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+
+  document.getElementById("logoutBtn").classList.add("hidden");
+  document.getElementById("userLabel").textContent = "";
+  document.getElementById("studentMessage").classList.add("hidden");
+
+  resetHostel();
+  clearTracking();
+  selectRole("Student");
+}
+
+function updateHostelOptions() {
+  const type = document.getElementById("hostelType").value;
+  const select = document.getElementById("hostel");
+  const previous = select.value;
+
+  select.innerHTML = "";
+
+  if (!HOSTELS[type]) {
+    select.disabled = true;
+    select.add(new Option(tr("selectTypeFirst"), ""));
+    return;
+  }
+
+  select.disabled = false;
+  select.add(new Option(tr("hostelName").replace(" *", ""), ""));
+
+  HOSTELS[type].forEach(name => {
+    select.add(new Option(name, name));
+  });
+
+  if (HOSTELS[type].includes(previous)) select.value = previous;
+}
+
+function resetHostel() {
+  document.getElementById("hostelType").value = "";
+  updateHostelOptions();
+}
+
+document.getElementById("hostelType")
+  .addEventListener("change", updateHostelOptions);
+
+function showMessage(text, isError = false) {
+  const message = document.getElementById("studentMessage");
+  message.textContent = text;
+  message.classList.remove("hidden", "error-message");
+
+  if (isError) message.classList.add("error-message");
+}
+
+/* Online translation. Requires internet and an available translation API. */
+async function translateText(text, targetLanguage) {
+  const target = targetLanguage === "te" ? "te" : "ta";
+  const url =
+    "https://api.mymemory.translated.net/get?q=" +
+    encodeURIComponent(text.slice(0, 450)) +
+    "&langpair=autodetect%7C" + target;
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Translation request failed");
+
+  const result = await response.json();
+  const translated = result?.responseData?.translatedText;
+
+  if (!translated || result.responseStatus !== 200) {
+    throw new Error("No translation returned");
+  }
+
+  return translated;
+}
+
+async function translateDescription() {
+  const source = document.getElementById("description").value.trim();
+  const output = document.getElementById("translationResult");
+  const button = document.getElementById("translateBtn");
+
+  if (!source) {
+    output.textContent = tr("translateEmpty");
+    return;
+  }
+
+  if (language === "en") {
+    output.textContent = tr("englishSelected");
+    return;
+  }
+
+  button.disabled = true;
+  output.textContent = tr("translating");
+
+  try {
+    const translated = await translateText(source, language);
+
+    output.textContent = tr("translated") + " " + translated;
+    lastTranslation = translated;
+  } catch (error) {
+    console.error(error);
+    output.textContent = tr("translationFailed");
+  } finally {
+    button.disabled = false;
+  }
+}
+
+/* Register a new complaint without changing the existing storage key. */
+document.getElementById("complaintForm")
+  .addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (!user || user.role !== "Student") {
+      alert(tr("loginRequired"));
+      return;
+    }
+
+    const hostelType = document.getElementById("hostelType").value;
+    const hostel = document.getElementById("hostel").value;
+    const floor = document.getElementById("floor").value.trim();
+    const room = document.getElementById("room").value.trim();
+    const category = document.getElementById("category").value;
+    const description = document.getElementById("description").value.trim();
+
+    if (!hostelType || !hostel || !floor || !room ||
+        !category || description.length < 5) {
+      showMessage(tr("fillRequired"), true);
+      return;
+    }
+
+    const complaint = {
+      id: "HR-" + Date.now(),
+      studentId: user.id,
+      hostelType,
+      hostel,
+      floor,
+      room,
+      category,
+      description,
+      descriptionLanguage: language,
+      translatedDescription: lastTranslation,
+      assignedWorker: "",
+      status: "Submitted",
+      createdAt: new Date().toLocaleString()
+    };
+
+    const data = getData();
+    data.unshift(complaint);
+
+    if (!saveData(data)) return;
+
+    event.target.reset();
+    resetHostel();
+    lastTranslation = "";
+    document.getElementById("translationResult").textContent = "";
+
+    showMessage(tr("submittedSuccess") + complaint.id);
+    document.getElementById("trackId").value = complaint.id;
+
+    refresh();
+    trackComplaint();
+
+    document.getElementById("studentMessage")
+      .scrollIntoView({ behavior:"smooth", block:"center" });
+  });
+
+function statusClass(status) {
+  if (status === "Resolved") return "resolved";
+  if (status === "In Progress") return "progress";
+  if (status === "Assigned") return "assigned";
+  return "";
+}
+
+/* Render a complaint safely. */
+function card(complaint, mode) {
+  const id = esc(complaint.id);
+  const worker = normalizeWorkerId(complaint.assignedWorker);
+  let controls = "";
+
+  if (mode === "admin") {
+    const workerOptions =
+      '<option value="">' + esc(tr("chooseWorker")) + '</option>' +
+      WORKERS.map(w =>
+        '<option value="' + w + '"' +
+        (worker === w ? " selected" : "") + '>' + w + '</option>'
+      ).join("");
+
+    const statusOptions = STATUSES.map(s =>
+      '<option value="' + s + '"' +
+      (complaint.status === s ? " selected" : "") + '>' +
+      esc(translateStatus(s)) + '</option>'
+    ).join("");
+
+    controls = `
+      <div class="controls">
+        <div class="field">
+          <label>${esc(tr("assignWorker"))}</label>
+          <select onchange="assignWorker('${id}',this.value)">
+            ${workerOptions}
+          </select>
+        </div>
+        <div class="field">
+          <label>${esc(tr("complaintStatus"))}</label>
+          <select onchange="changeStatus('${id}',this.value)">
+            ${statusOptions}
+          </select>
+        </div>
+      </div>`;
+  }
+
+  if (mode === "worker") {
+    const statusOptions = STATUSES
+      .filter(s => s !== "Submitted")
+      .map(s =>
+        '<option value="' + s + '"' +
+        (complaint.status === s ? " selected" : "") + '>' +
+        esc(translateStatus(s)) + '</option>'
+      ).join("");
+
+    controls = `
+      <div class="controls">
+        <div class="field">
+          <label>${esc(tr("updateStatus"))}</label>
+          <select onchange="changeStatus('${id}',this.value)">
+            ${statusOptions}
+          </select>
+        </div>
+      </div>`;
+  }
+
+  const translated = complaint.translatedDescription
+    ? '<p class="muted"><b>' + esc(tr("translated")) + '</b> ' +
+      esc(complaint.translatedDescription) + '</p>'
+    : "";
+
+  return `
+    <article class="card">
+      <div class="cardtop">
+        <div>
+          <h3>${esc(translateCategory(complaint.category))} · ${id}</h3>
+          <div class="muted">${esc(tr("studentId"))}: ${esc(complaint.studentId)}
+            · ${esc(complaint.createdAt)}</div>
+        </div>
+        <span class="status ${statusClass(complaint.status)}">
+          ${esc(translateStatus(complaint.status))}
+        </span>
+      </div>
+
+      <div class="desc">${esc(complaint.description)}</div>
+      ${translated}
+
+      <div class="details">
+        <div>
+          <span class="detail-label">${esc(tr("hostelType"))}</span>
+          ${esc(complaint.hostelType === "Boys" ? tr("boys") :
+                complaint.hostelType === "Girls" ? tr("girls") : complaint.hostelType)}
+        </div>
+        <div>
+          <span class="detail-label">${esc(tr("hostel"))}</span>
+          ${esc(complaint.hostel)}
+        </div>
+        <div>
+          <span class="detail-label">${esc(tr("studentFloor"))}</span>
+          ${esc(complaint.floor)}
+        </div>
+        <div>
+          <span class="detail-label">${esc(tr("roomNumber"))}</span>
+          ${esc(complaint.room)}
+        </div>
+        <div>
+          <span class="detail-label">${esc(tr("assignWorker"))}</span>
+          <b>${esc(worker || tr("notAssigned"))}</b>
+        </div>
+        <div>
+          <span class="detail-label">${esc(tr("complaintId"))}</span>
+          ${id}
+        </div>
+      </div>
+      ${controls}
+    </article>`;
+}
+
+function refresh() {
+  if (!user) return;
+
+  const all = getData();
+
+  if (user.role === "Student") {
+    const mine = all.filter(c => c.studentId === user.id);
+
+    document.getElementById("sTotal").textContent = mine.length;
+    document.getElementById("sActive").textContent =
+      mine.filter(c => c.status !== "Resolved").length;
+    document.getElementById("sResolved").textContent =
+      mine.filter(c => c.status === "Resolved").length;
+
+    document.getElementById("studentComplaints").innerHTML = mine.length
+      ? mine.map(c => card(c, "student")).join("")
+      : '<div class="empty">' + esc(tr("noComplaints")) + '</div>';
+
+    if (document.getElementById("trackId").value.trim()) {
+      trackComplaint();
+    }
+  }
+
+  if (user.role === "Admin") {
+    document.getElementById("aTotal").textContent = all.length;
+    document.getElementById("aActive").textContent =
+      all.filter(c => c.status !== "Resolved").length;
+    document.getElementById("aResolved").textContent =
+      all.filter(c => c.status === "Resolved").length;
+
+    document.getElementById("adminComplaints").innerHTML = all.length
+      ? all.map(c => card(c, "admin")).join("")
+      : '<div class="empty">' + esc(tr("noAdminComplaints")) + '</div>';
+  }
+
+  if (user.role === "Worker") {
+    const mine = all.filter(c =>
+      normalizeWorkerId(c.assignedWorker) === normalizeWorkerId(user.id)
+    );
+
+    document.getElementById("wTotal").textContent = mine.length;
+    document.getElementById("wProgress").textContent =
+      mine.filter(c => c.status === "In Progress").length;
+    document.getElementById("wResolved").textContent =
+      mine.filter(c => c.status === "Resolved").length;
+
+    document.getElementById("workerComplaints").innerHTML = mine.length
+      ? mine.map(c => card(c, "worker")).join("")
+      : '<div class="empty">' + esc(tr("noWorkerWork")) + ' ' +
+        esc(user.id) + '. ' + esc(tr("askAdmin")) + '</div>';
+  }
+}
+
+function assignWorker(id, worker) {
+  if (!user || user.role !== "Admin") return;
+
+  const data = getData();
+  const complaint = data.find(c => c.id === id);
+
+  if (!complaint) {
+    alert(tr("notFoundAdmin"));
+    refresh();
+    return;
+  }
+
+  const selectedWorker = normalizeWorkerId(worker);
+
+  if (selectedWorker && !WORKERS.includes(selectedWorker)) {
+    alert(tr("validWorker"));
+    refresh();
+    return;
+  }
+
+  complaint.assignedWorker = selectedWorker;
+
+  if (selectedWorker && complaint.status === "Submitted") {
+    complaint.status = "Assigned";
+  } else if (!selectedWorker && complaint.status === "Assigned") {
+    complaint.status = "Submitted";
+  }
+
+  if (saveData(data)) refresh();
+}
+
+function changeStatus(id, status) {
+  if (!user || !STATUSES.includes(status)) return;
+
+  if (user.role === "Student") {
+    alert(tr("studentCannotStatus"));
+    refresh();
+    return;
+  }
+
+  if (user.role === "Worker" && status === "Submitted") {
+    alert(tr("workerCannotSubmitted"));
+    refresh();
+    return;
+  }
+
+  const data = getData();
+  const complaint = data.find(c => c.id === id);
+
+  if (!complaint) {
+    alert(tr("notFoundAdmin"));
+    refresh();
+    return;
+  }
+
+  if (user.role === "Worker" &&
+      normalizeWorkerId(complaint.assignedWorker) !== normalizeWorkerId(user.id)) {
+    alert(tr("onlyAssigned"));
+    refresh();
+    return;
+  }
+
+  complaint.status = status;
+
+  if (saveData(data)) refresh();
+}
+
+function trackComplaint() {
+  if (!user || user.role !== "Student") return;
+
+  const id = document.getElementById("trackId").value.trim().toUpperCase();
+  const result = document.getElementById("trackingResult");
+
+  if (!id) {
+    result.innerHTML = '<div class="empty">' + esc(tr("enterTrack")) + '</div>';
+    return;
+  }
+
+  const complaint = getData().find(c =>
+    String(c.id).toUpperCase() === id && c.studentId === user.id
+  );
+
+  result.innerHTML = complaint
+    ? card(complaint, "student")
+    : '<div class="empty">' + esc(tr("notFound")) + '</div>';
+}
+
+function clearTracking() {
+  document.getElementById("trackId").value = "";
+  document.getElementById("trackingResult").innerHTML = "";
+}
+
+document.getElementById("trackId").addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    trackComplaint();
+  }
+});
+
+window.addEventListener("storage", event => {
+  if (event.key === KEY || event.key === null) refresh();
+});
+
+applyLanguage();
+</script>
+</body>
+</html>
